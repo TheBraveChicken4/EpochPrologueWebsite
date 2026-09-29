@@ -118,6 +118,30 @@
   #about p { margin: 0 0 12px; font: 500 15px/1.5 var(--sans); color: var(--bright); }
   #about p:last-child { margin: 0; color: var(--text); }
 
+  #dock { display: contents; }
+
+  /* Phones: header on two rows, email card centered with the sound button under it */
+  @media (max-width: 640px) {
+    .corner { font-size: 11px; letter-spacing: .14em; gap: 10px; }
+    .corner svg { width: 42px; }
+    #brand { left: calc(var(--col) + 10px); }
+    #about-btn { right: calc(var(--col) + 10px); }
+    #soon { top: calc(var(--pad) + 42px); font-size: 12px; letter-spacing: .26em; }
+    #dock {
+      position: fixed; inset: 0; z-index: 3; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 16px;
+      padding: 0 calc(var(--col) + 12px); pointer-events: none;
+    }
+    #dock > #mute, #dock > #signup { position: static; pointer-events: auto; }
+    #dock > #mute { order: 2; }
+    #dock > #signup {
+      width: min(340px, 100%); background: rgba(0,0,0,.4);
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); animation-name: fade;
+    }
+    #about { top: calc(var(--pad) + 80px); right: calc(var(--col) + 10px); width: calc(100vw - var(--col) * 2 - 20px); }
+  }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
   button:focus-visible, input:focus-visible { outline: 2px solid var(--line); outline-offset: 3px; }
   @media (prefers-reduced-motion: reduce) { .track { animation: none; } #signup { animation-duration: .01s; animation-delay: 0s; } }
 </style>
@@ -144,6 +168,7 @@
   <p>Act I is coming soon. When the door opens, the people on this list hear first.</p>
 </section>
 
+<div id="dock">
 <button id="mute" type="button" aria-pressed="true">Sound on</button>
 
 <form id="signup" novalidate>
@@ -154,6 +179,7 @@
   </div>
   <div id="status" role="status" aria-live="polite"></div>
 </form>
+</div>
 
 <script>
   // ---- Edit these ----
